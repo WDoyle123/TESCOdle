@@ -4,7 +4,7 @@
 
 ## Demo
 
-![tescodle](figures/tescodle_demo.png)
+![tescodle](figures/TESCOdle-1.png)
 
 ## Data
 
