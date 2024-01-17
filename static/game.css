@@ -1,0 +1,145 @@
+@font-face {
+    font-family: 'TESCOModern-Regular';
+    src: url('fonts/TESCOModern-Regular-final.ttf') format('truetype');
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+}
+
+.info-card {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  background: white;
+  border: 1px solid #cccccc;
+  width: 250px;
+}
+
+.product-top {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    padding-bottom: 10px;
+}
+
+.product-bottom {
+    width: 100%; 
+}
+
+.img-container {
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.img-product {
+  height: 125px;
+  width: 125px;
+  border-radius: 10px;
+}
+
+.product-info {
+  color: #00539f;
+  font-family: 'TESCOModern-Regular';
+  font-weight: 700;
+  font-size: 11px;
+  text-align: left; 
+  padding-bottom: 10px;
+}
+
+.clubcard {
+    display: grid;
+    grid-template-columns: 40px auto; /* Split into two equal columns */
+    background: #fcd700;
+    width: 100%;
+    height: 40px;
+    margin-bottom: 10px;
+}
+
+.blue-square {
+    background: #00539f;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.yellow-circle {
+    background: #fcd700;
+    border-radius: 50%; 
+    justify-content: center;
+    align-items: center;
+    width: 85%; 
+    height: 85%;
+}
+
+.guess-text {
+    font-size: 9px;
+    color: black;
+    font-family: 'TESCOModern-Regular';
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+    font-weight: 600;
+}
+
+.guess-count {
+    text-align: right;
+    font-family: 'TESCOModern-Regular';
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 10px; 
+}
+
+.how-to {
+    font-family: 'TESCOModern-Regular';
+    color: rgb(102, 102, 102);
+    font-size: 8px;
+    margin-bottom: 20px;
+}
+
+.hidden-price {
+    font-family: 'TESCOModern-Regular';
+    font-weight: 600;
+    color: black;
+    margin-bottom: 5px;
+}
+
+.enter-price {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap: 10px;
+    margin-bottom: 15px;
+    margin-right:10px;
+}
+
+.price-form {
+    border: 1px solid rgba(102, 102, 102, 0.8);
+    padding-left: 5px;
+}
+
+.add-button {
+    font-family: 'TESCOModern-Regular';
+    font-weight: 600;
+    font-size: 12px;
+    background: #00539f;
+    border-radius: 20px;
+    height: 25px;
+    color:white; 
+    display:flex;
+    text-align:center;
+    justify-content:center;
+    align-items:center;
+    border: none;
+    cursor: pointer;
+}

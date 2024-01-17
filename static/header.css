@@ -1,0 +1,73 @@
+@font-face {
+    font-family: 'Newtext Bold';
+    src: url("fonts/Newtext Bold.ttf");
+}
+
+@font-face {
+    font-family: 'Newtext Regular';
+    src: url("fonts/Newtext Regular.ttf");
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+    background: #f6f6f6
+}
+
+*:focus {
+  outline: none;
+}
+
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#header-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 350px;
+  height: 80px;
+}
+
+.title-tesco {
+    color: #ee1c2e;
+}
+
+.title {
+    color:black;
+    font-family: 'Newtext Bold', sans-serif;
+    font-weight:400;
+    border-bottom: 10px dashed #00539f;
+    margin-top: 5px;
+    font-size: 32px;
+}
+
+.info-button {
+    font-family: 'VT323', monospace;
+    font-size: 40px;
+    color: #00539f;
+    background:none;
+    cursor: pointer;
+    border: none;
+    margin-top:5px;
+    border:0;
+    padding: 0 7px;
+}
+
+img {
+    width:30px;
+    color:#00539f;
+    margin-top:10px;
+}
+
+.box {
+    background: #f6f6f6;
+    border: #e7e7e7;
+}
