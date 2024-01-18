@@ -21,7 +21,7 @@ async function getTodaysProduct() {
     const csvData = await fetchCSV(csvFilePath);
     const parsedData = parseCSV(csvData);
 
-    const startDate = new Date("2024-01-18"); // Fixed start date
+    const startDate = new Date("2022-01-10"); // Fixed start date
     const today = new Date();
     const dayIndex = dateDiffInDays(startDate, today) - 1;
 
@@ -115,8 +115,8 @@ function checkGuess(inputElement) {
         const upperBound = productPrice * 1.05;
         const lowerBound10 = productPrice * 0.90;
         const upperBound10 = productPrice * 1.10
-        const lowerBound15 = productPrice * 0.85;
-        const upperBound15 = productPrice * 1.15;
+        const lowerBound20 = productPrice * 0.80;
+        const upperBound20 = productPrice * 1.20;
 
         console.log(guessValue)
         console.log(productPrice)
@@ -127,8 +127,8 @@ function checkGuess(inputElement) {
         } else if (guessValue >= lowerBound10 && guessValue <= upperBound10) {
             // Change color only if the guess is within 25% but not within 10%
             indicateHighLow(inputElement, '#fbfb70');
-        } else if (guessValue >= lowerBound15 && guessValue <= upperBound15) {
-            // Change color only if the guess is within 25% but not within 15%
+        } else if (guessValue >= lowerBound20 && guessValue <= upperBound20) {
+            // Change color only if the guess is within 25% but not within 20%
             indicateHighLow(inputElement, '#fed285');
         } else {
             inputElement.style.backgroundColor = '#ed6a5b'; // Reset color if not within 15%
