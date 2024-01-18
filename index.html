@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="static/header.css">
         <link rel="stylesheet" href="static/game.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=VT323&display=swap">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
         <!-- Additional meta tags and scripts can be included here -->
     </head>
     <body>
@@ -24,14 +25,14 @@
                 <div class='product-top'>
                     <!-- IMAGE PLACEHOLDER -->
                     <div class='img-container'>
-                        <img class='img-product' src="public/product_1470.png">
+                        <img id="productImage" src="" class="img-product" alt="Product Image">
                     </div>
                 </div>
 
                 <div class='product-bottom'>
                     <!-- PRODUCT INFO PLACEHOLDER -->
-                    <div class='product-info'>
-                        British Venison Grillsteaks 400G
+                    <div id="productName" class='product-info'>
+                        Product Name
                     </div>
 
                     <div class='clubcard'>
@@ -53,22 +54,21 @@
                         Type the correct total of the product listed
                     </div>
 
-                    <div class='hidden-price'>
+                    <!-- DON'T FORGET TO HIDE THIS -->
+                    <div id='productPrice' class='hidden-price'>
                         £?.??
                     </div>
 
-                    <div class='enter-price'>
-                        <input class='price-form' type="text" placeholder="Enter Price...">
-                        </input>
-
-                        <button class='add-button' type="submit">
-                            Add
-                        </button>
-
+                    <div class="enter-price" id="guessInputs">
+                        <input class="price-form" id="guess0" type="text" placeholder="Enter Price...">
+                        <button class="add-button" type="button" onclick="addGuessInput()">Add</button>
                     </div>
+
                 </div>
             </div>
+            </div>
         </main>
+        <script src="scripts/game.js"></script>
     </body>
 </html>
 
