@@ -50,30 +50,18 @@ function updateGuessCounter() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const initialAddButton = document.querySelector('.add-button');
-    initialAddButton.id = 'addButton0';
-    initialAddButton.onclick = () => {
-        const initialInput = document.getElementById('guess0');
-        // Check the first guess when the initial 'Add' button is clicked
-        checkGuess(initialInput);
-        if (currentGuessCount < maxGuesses) {
-            addGuessInput();
-        }
-        initialInput.disabled = true;
-        initialAddButton.disabled = true;
-    };
-
-    // Initialize guess counter display
+    // Initialize the first guess input and button
+    addGuessInput();
     updateGuessCounter();
 });
 
 function addGuessInput() {
-
-    if (gameState == 'end') {
+    if (gameState === 'end' || currentGuessCount > maxGuesses) {
         return;
     }
+
     const guessInputContainer = document.getElementById('guessInputs');
-    const guessIndex = guessInputContainer.querySelectorAll('.price-form').length;
+    const guessIndex = currentGuessCount - 1;
 
     // Create a new input element
     const newInput = document.createElement('input');
@@ -88,14 +76,14 @@ function addGuessInput() {
     addButton.textContent = 'Add';
     addButton.id = 'addButton' + guessIndex;
     addButton.onclick = () => {
-        checkGuess(newInput); // Check the guess when 'Add' is clicked
-        newInput.disabled = true; // Disable this input
-        addButton.disabled = true; // Disable this 'Add' button
+        if (!newInput.disabled) {
+            checkGuess(newInput);
+            newInput.disabled = true;
+            addButton.disabled = true;
+        }
 
-        if (currentGuessCount >= maxGuesses || gameState == 'end') {
-            endGame(); // End the game if max guesses reached and not already ended
-        } else if (currentGuessCount < maxGuesses) {
-            addGuessInput(); // Add another guess input only if under max guesses
+        if (currentGuessCount < maxGuesses && gameState !== 'end') {
+            addGuessInput();
         }
     };
 
@@ -103,7 +91,10 @@ function addGuessInput() {
     guessInputContainer.appendChild(newInput);
     guessInputContainer.appendChild(addButton);
 
-    // Increment current guess count and update the guess counter
+    if (currentGuessCount === 1) { // Only increment count and update counter for subsequent guesses
+        return;
+    }
+
     currentGuessCount++;
     updateGuessCounter();
 }
@@ -111,29 +102,27 @@ function addGuessInput() {
 function checkGuess(inputElement) {
     const guessValue = parseFloat(inputElement.value);
     if (!isNaN(guessValue)) {
-        const lowerBound = productPrice * 0.95;
-        const upperBound = productPrice * 1.05;
-        const lowerBound10 = productPrice * 0.90;
-        const upperBound10 = productPrice * 1.10
-        const lowerBound20 = productPrice * 0.80;
-        const upperBound20 = productPrice * 1.20;
+        const lowerBound = productPrice * 0.95; // CORRECT
+        const upperBound = productPrice * 1.05; // CORRECT
+        const lowerBound10 = productPrice * 0.90; // YELLOW
+        const upperBound10 = productPrice * 1.10 // YELLOW
+        const lowerBound20 = productPrice * 0.80; // ORANGE 
+        const upperBound20 = productPrice * 1.20; // ORANGE 
 
-        console.log(guessValue)
-        console.log(productPrice)
-
-        if ((guessValue == productPrice) || (guessValue >= lowerBound && guessValue <= upperBound)) {
-            // Stop the game if guess is exactly right or within 5%
-            endGame(inputElement);
-        } else if (guessValue >= lowerBound10 && guessValue <= upperBound10) {
-            // Change color only if the guess is within 25% but not within 10%
-            indicateHighLow(inputElement, '#fbfb70');
-        } else if (guessValue >= lowerBound20 && guessValue <= upperBound20) {
-            // Change color only if the guess is within 25% but not within 20%
-            indicateHighLow(inputElement, '#fed285');
-        } else {
-            inputElement.style.backgroundColor = '#ed6a5b'; // Reset color if not within 15%
-        }
+    if ((guessValue == productPrice) || (guessValue >= lowerBound && guessValue <= upperBound)) {
+        // Correct guess logic
+        endGame(inputElement);
+    } else if (guessValue >= lowerBound10 && guessValue <= upperBound10) {
+        // Guess within 10% but not correct
+        indicateHighLow(inputElement, guessValue, '#fbfb70');
+    } else if (guessValue >= lowerBound20 && guessValue <= upperBound20) {
+        // Guess within 20% but not within 10%
+        indicateHighLow(inputElement, guessValue, '#fed285');
+    } else {
+        // Guess not within 20%
+        indicateHighLow(inputElement, guessValue, '#ed6a5b');
     }
+}
 }
 
 function endGame(correctInputElement = null) {
@@ -160,9 +149,17 @@ function disableAllInputsAndButtons() {
     allAddButtons.forEach(button => button.disabled = true);
 }
 
-function indicateHighLow(inputElement, color) {
-    // Change the background color of the input element to yellow
+function indicateHighLow(inputElement, guessValue, color) {
     inputElement.style.backgroundColor = color;
+
+    const addButton = inputElement.nextElementSibling;
+    console.log(addButton)
+    if (addButton && addButton.classList.contains('add-button')) {
+        console.log("Updating Add button: ", guessValue, productPrice); // Debug log
+        addButton.textContent = guessValue > productPrice ? '↓ DOWN' : '↑ UP';
+    } else {
+        console.log("Next sibling is not an Add button: ", addButton); // Debug log
+    }
 }
 
 getTodaysProduct().then(product => {
