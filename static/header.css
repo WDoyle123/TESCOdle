@@ -8,6 +8,11 @@
     src: url("fonts/Newtext Regular.ttf");
 }
 
+@font-face {
+    font-family: 'TESCOModern-Regular';
+    src: url('fonts/TESCOModern-Regular-final.ttf') format('truetype');
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -22,6 +27,39 @@ body {
   outline: none;
 }
 
+.site-footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+    margin-top: 25px;
+    /* Add any other styling you need here */
+}
+
+#footer-container {
+    display: flex;
+    flex-direction: column; /* Changed to column */
+    align-items: flex-start;
+    width: 240px;
+    height: 80px; 
+    font-size: 12px; /* Consider a larger font size */
+}
+
+/* If you want a different font size for the copyright text */
+.copyright {
+    text-align: justify;
+    font-size: 8px;    
+    font-family: 'TESCOModern-Regular';
+    color: rgb(102, 102, 102);
+    margin-top: 10px;
+}
+
+.github {
+    font-size: 9px;
+    font-family: 'TESCOModern-Regular';
+    color:rgb(102, 102, 102);
+    text-align: justify;
+}
 .site-header {
     display: flex;
     align-items: center;

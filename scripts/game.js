@@ -39,7 +39,7 @@ function dateDiffInDays(date1, date2) {
 
 let productPrice = 0; // This will be set when fetching the product
 let maxGuesses = 4;
-let currentGuessCount = 1;
+let currentGuessCount = 0;
 let gameState = 0
 
 function updateGuessCounter() {
@@ -56,12 +56,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function addGuessInput() {
-    if (gameState === 'end' || currentGuessCount > maxGuesses) {
-        return;
-    }
-
     const guessInputContainer = document.getElementById('guessInputs');
-    const guessIndex = currentGuessCount - 1;
+    const guessIndex = currentGuessCount;
+
+    console.log(guessIndex)
 
     // Create a new input element
     const newInput = document.createElement('input');
@@ -91,10 +89,6 @@ function addGuessInput() {
     guessInputContainer.appendChild(newInput);
     guessInputContainer.appendChild(addButton);
 
-    if (currentGuessCount === 1) { // Only increment count and update counter for subsequent guesses
-        return;
-    }
-
     currentGuessCount++;
     updateGuessCounter();
 }
@@ -121,6 +115,10 @@ function checkGuess(inputElement) {
     } else {
         // Guess not within 20%
         indicateHighLow(inputElement, guessValue, '#ed6a5b');
+    }
+
+    if (currentGuessCount >= maxGuesses) {
+        endGame();
     }
 }
 }
