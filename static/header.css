@@ -17,6 +17,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: 'TESCOModern-Regular';
 }
 
 body {
@@ -27,6 +28,9 @@ body {
   outline: none;
 }
 
+footer {
+    margin-bottom: 25px;
+}
 .site-footer {
     display: flex;
     flex-direction: column;
@@ -76,6 +80,8 @@ body {
 
 .title-tesco {
     color: #ee1c2e;
+    font-family: 'Newtext Bold';
+
 }
 
 .title {

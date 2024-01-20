@@ -100,17 +100,17 @@ function checkGuess(inputElement) {
         const upperBound = productPrice * 1.05; // CORRECT
         const lowerBound10 = productPrice * 0.90; // YELLOW
         const upperBound10 = productPrice * 1.10 // YELLOW
-        const lowerBound20 = productPrice * 0.80; // ORANGE 
-        const upperBound20 = productPrice * 1.20; // ORANGE 
+        const lowerBound25 = productPrice * 0.75; // ORANGE 
+        const upperBound25 = productPrice * 1.25; // ORANGE 
 
     if ((guessValue == productPrice) || (guessValue >= lowerBound && guessValue <= upperBound)) {
         // Correct guess logic
         endGame(inputElement);
     } else if (guessValue >= lowerBound10 && guessValue <= upperBound10) {
-        // Guess within 10% but not correct
+        // Guess within 10% but not 5%
         indicateHighLow(inputElement, guessValue, '#fbfb70');
-    } else if (guessValue >= lowerBound20 && guessValue <= upperBound20) {
-        // Guess within 20% but not within 10%
+    } else if (guessValue >= lowerBound25 && guessValue <= upperBound25) {
+        // Guess within 25% but not within 10%
         indicateHighLow(inputElement, guessValue, '#fed285');
     } else {
         // Guess not within 20%

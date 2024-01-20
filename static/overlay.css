@@ -1,0 +1,83 @@
+.how-to-title {
+
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.dle {
+
+    font-family: 'Newtext Bold';
+    color: black;
+}
+
+p {
+
+  font-family: 'TESCOModern-Regular';
+  font-weight: 700;
+  font-size: 11px;
+  margin-bottom: 10px;
+}
+
+.blue-text {
+  font-family: 'TESCOModern-Regular';
+  font-weight: 700;
+  font-size: 11px;
+  margin-bottom: 0px;
+  margin-left: 5px}
+
+.colour-explanation {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* Spacing between each color explanation */
+    gap:15px;
+}
+
+.colour-explanation input {
+    margin-right: 0px; /* Spacing between input and text */
+    /* Add other styles for the input, such as width, height, border, etc. */
+}
+
+.red-demo {
+    background-color: #ed6a5b; /* Red background */
+    width: 100px;
+    border: 1px solid rgba(102, 102, 102, 0.8);
+    padding-left: 5px;
+}
+
+.orange-demo {
+    background-color: #fed285; /* Orange background */
+    width: 100px;
+    border: 1px solid rgba(102, 102, 102, 0.8);
+    padding-left: 5px;
+}
+
+.yellow-demo {
+    background-color: #fbfb70; /* Yellow background */
+    width: 100px;
+    border: 1px solid rgba(102, 102, 102, 0.8);
+    padding-left: 5px;
+}
+
+.green-demo {
+    background-color: #90ee90; /* Green background */
+    width: 100px;
+    border: 1px solid rgba(102, 102, 102, 0.8);
+    padding-left: 5px;
+}
+
+.add-button-demo {
+    width: 100px;
+    font-family: 'TESCOModern-Regular';
+    font-weight: 600;
+    font-size: 12px;
+    background: #00539f;
+    border-radius: 20px;
+    height: 25px;
+    color:white; 
+    display:flex;
+    text-align:center;
+    justify-content:center;
+    align-items:center;
+    border: none;
+    cursor: pointer;
+}
