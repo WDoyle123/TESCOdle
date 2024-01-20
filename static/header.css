@@ -85,23 +85,25 @@ footer {
 }
 
 .title {
-    color:black;
+    color: black;
     font-family: 'Newtext Bold', sans-serif;
-    font-weight:400;
-    border-bottom: 10px dashed #00539f;
+    font-weight: 400;
     margin-top: 5px;
     font-size: 32px;
+    background-image: linear-gradient(to right, #00539f 50%, transparent 50%);
+    background-size: 39px 8px; /* width of dashes and height of border */
+    background-repeat: repeat-x;
+    background-position: left bottom;
+    padding-bottom: 10px; /* Space for the border */
 }
 
 .info-button {
-    font-family: 'VT323', monospace;
-    font-size: 40px;
+    font-size: 32px;
     color: #00539f;
     background:none;
     cursor: pointer;
+    margin-top:2px;
     border: none;
-    margin-top:5px;
-    border:0;
     padding: 0 7px;
 }
 
