@@ -51,6 +51,7 @@ function updateGuessCounter() {
 
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize the first guess input and button
+    displayStats(); 
     addGuessInput();
     updateGuessCounter();
 });
@@ -105,7 +106,7 @@ function checkGuess(inputElement) {
 
     if ((guessValue == productPrice) || (guessValue >= lowerBound && guessValue <= upperBound)) {
         // Correct guess logic
-        endGame(inputElement);
+        endGame(inputElement, true);
     } else if (guessValue >= lowerBound10 && guessValue <= upperBound10) {
         // Guess within 10% but not 5%
         indicateHighLow(inputElement, guessValue, '#fbfb70');
@@ -123,8 +124,10 @@ function checkGuess(inputElement) {
 }
 }
 
-function endGame(correctInputElement = null) {
+function endGame(correctInputElement = null, gameWon = false) {
     gameState = 'end'; // Set game state to 'end'
+    recordScore(currentGuessCount, gameWon);
+    displayStats(); 
 
     // Highlight the correct input field in green, if provided
     if (correctInputElement) {
@@ -138,6 +141,38 @@ function endGame(correctInputElement = null) {
 
     disableAllInputsAndButtons(); // Disable inputs and buttons
 }
+
+function recordScore(score, gameWon) {
+    let stats = JSON.parse(localStorage.getItem('gameStats')) || { scores: {}, totalGames: 0 };
+    if (gameWon) {
+        stats.scores[score] = (stats.scores[score] || 0) + 1;
+    }
+    stats.totalGames += 1;
+    localStorage.setItem('gameStats', JSON.stringify(stats));
+}
+
+function displayStats() {
+    // Retrieve stats from localStorage or initialize if not present
+    let stats = JSON.parse(localStorage.getItem('gameStats')) || { scores: {}, totalGames: 0 };
+    const statsContainer = document.getElementById('statsContainer');
+
+    // Clear previous stats display
+    statsContainer.innerHTML = '';
+
+    // Display scores for each guess count
+    for (let i = 1; i <= maxGuesses; i++) {
+        const scoreCount = stats.scores[i] || 0;
+        const scoreElement = document.createElement('div');
+        scoreElement.textContent = `Score ${i}: ${scoreCount}`;
+        statsContainer.appendChild(scoreElement);
+    }
+
+    // Display total games played
+    const totalGamesElement = document.createElement('div');
+    totalGamesElement.textContent = `Total Games: ${stats.totalGames}`;
+    statsContainer.appendChild(totalGamesElement);
+}
+
 
 function disableAllInputsAndButtons() {
     // Disable all input fields and 'Add' buttons

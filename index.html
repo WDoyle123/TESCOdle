@@ -16,7 +16,7 @@
         <header class='site-header'>
             <div id="header-container">
                 <button id="info-button" class="info-button" data-overlay="info-overlay" type="button">?</button>
-                <h1 class="title"><span class="title-tesco">TESCO</span>dle</h1>
+                <h1 id='title' class="title"><span class="title-tesco">TESCO</span>dle</h1>
                 <img src="public/stat-logo.svg" id="stats-button" data-overlay="stats-overlay">
             </div>
         </header>
@@ -111,22 +111,33 @@
             </div>
         </div>
 
-
-            <footer class="site-footer">
-                <div id="footer-container">
-                    <p class='github'>
-                    Check out <a href="https://github.com/wdoyle123/tescodle.git">Tescodle</a> on Github. Starring would be appreciated!
-                    </p>
-
-                    <p class="copyright">
-                    &copy; [2024] William E. Doyle. Tescodle is not affiliated with Tesco. 
-                    Tesco is a registered trademark of Tesco PLC and is used here under the principle of fair use.
-                    </p>
+        <div id='stats-overlay' class='game-container' style='display: none;'>
+            <div class='info-card'>
+                <div class='how-to-title'>
+                <div id="statsContainer"></div>
                 </div>
-            </footer>
+                <div class='how-to-rules'>
+                    <p>Each day your score gets calculated</p>
+                </div>
+            </div>
+        </div>
 
-            <script src="scripts/header.js"></script>
-            <script src="scripts/game.js"></script>
+
+        <footer class="site-footer">
+            <div id="footer-container">
+                <p class='github'>
+                Check out <a href="https://github.com/wdoyle123/tescodle.git">Tescodle</a> on Github. Starring would be appreciated!
+                </p>
+
+                <p class="copyright">
+                &copy; [2024] William E. Doyle. Tescodle is not affiliated with Tesco. 
+                Tesco is a registered trademark of Tesco PLC and is used here under the principle of fair use.
+                </p>
+            </div>
+        </footer>
+
+        <script src="scripts/header.js"></script>
+        <script src="scripts/game.js"></script>
     </body>
 </html>
 
