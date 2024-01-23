@@ -25,11 +25,28 @@ async function getTodaysProduct() {
     const today = new Date();
     const dayIndex = dateDiffInDays(startDate, today) - 1;
 
+    const todayStr = today.toDateString();
+    const lastPlayedStr = window.localStorage.getItem('lastPlayed');
+
+    // Reset the game state if the day has changed
+    if (lastPlayedStr !== todayStr) {
+        resetGameState();
+        window.localStorage.setItem('lastPlayed', todayStr);
+    }
     if (dayIndex >= 0 && dayIndex < parsedData.length) {
         return parsedData[dayIndex];
     } else {
         return null;
     }
+}
+
+function resetGameState() {
+    for (let i = 0; i < maxGuesses; i++) {
+        window.localStorage.removeItem(i.toString());
+    }
+    window.localStorage.removeItem('completedToday');
+    window.localStorage.removeItem('lastPlayed');
+    window.localStorage.removeItem('gameState'); // Reset the saved game state
 }
 
 function dateDiffInDays(date1, date2) {
@@ -50,17 +67,42 @@ function updateGuessCounter() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize the first guess input and button
     displayStats(); 
-    addGuessInput();
+
+    let restoredCount = 0;
+    const savedGameState = window.localStorage.getItem('gameState');
+
+    for (let i = 0; i < maxGuesses; i++) {
+        const savedGuess = window.localStorage.getItem(i);
+        if (savedGuess) {
+            const guessDetails = JSON.parse(savedGuess);
+            addGuessInput(guessDetails, true);
+            restoredCount++;
+        }
+    }
+
+    // Add a new input field only if the game hasn't ended and there are guesses left
+    if (restoredCount < maxGuesses && savedGameState !== 'end') {
+        addGuessInput();
+    }
+
     updateGuessCounter();
 });
 
-function addGuessInput() {
+// Function to store saved game state
+function initLocalStorage() {
+
+    // Clear local game state
+    window.localStorage.setItem('completedToday', false);
+    window.localStorage.setItem('0', '')
+    window.localStorage.setItem('1', '')
+    window.localStorage.setItem('2', '')
+    window.localStorage.setItem('3', '')
+}
+
+function addGuessInput(guessDetails = null, isRestored = false) {
     const guessInputContainer = document.getElementById('guessInputs');
     const guessIndex = currentGuessCount;
-
-    console.log(guessIndex)
 
     // Create a new input element
     const newInput = document.createElement('input');
@@ -74,6 +116,15 @@ function addGuessInput() {
     addButton.className = 'add-button';
     addButton.textContent = 'Add';
     addButton.id = 'addButton' + guessIndex;
+
+    if (guessDetails && isRestored) {
+        newInput.value = guessDetails.value;
+        newInput.style.backgroundColor = guessDetails.color;
+        addButton.textContent = guessDetails.buttonText;
+        newInput.disabled = true;
+        addButton.disabled = true;
+    }
+
     addButton.onclick = () => {
         if (!newInput.disabled) {
             checkGuess(newInput);
@@ -103,31 +154,34 @@ function checkGuess(inputElement) {
         const upperBound10 = productPrice * 1.10 // YELLOW
         const lowerBound25 = productPrice * 0.75; // ORANGE 
         const upperBound25 = productPrice * 1.25; // ORANGE 
+        // Determine color and button text
+        let color = '';
+        let buttonText = '';
+        if ((guessValue == productPrice) || (guessValue >= lowerBound && guessValue <= upperBound)) {
+            color = 'lightgreen';
+            buttonText = 'Correct';
+            indicateHighLow(inputElement, guessValue, color)
+            endGame(inputElement, true);
+        } else if (guessValue >= lowerBound10 && guessValue <= upperBound10) {
+            indicateHighLow(inputElement, guessValue, '#fbfb70');
+        } else if (guessValue >= lowerBound25 && guessValue <= upperBound25) {
+            indicateHighLow(inputElement, guessValue, '#fed285');
+        } else {
+            indicateHighLow(inputElement, guessValue, '#ed6a5b');
+        }
 
-    if ((guessValue == productPrice) || (guessValue >= lowerBound && guessValue <= upperBound)) {
-        // Correct guess logic
-        endGame(inputElement, true);
-    } else if (guessValue >= lowerBound10 && guessValue <= upperBound10) {
-        // Guess within 10% but not 5%
-        indicateHighLow(inputElement, guessValue, '#fbfb70');
-    } else if (guessValue >= lowerBound25 && guessValue <= upperBound25) {
-        // Guess within 25% but not within 10%
-        indicateHighLow(inputElement, guessValue, '#fed285');
-    } else {
-        // Guess not within 20%
-        indicateHighLow(inputElement, guessValue, '#ed6a5b');
+        if (currentGuessCount >= maxGuesses) {
+            endGame(null, false);
+        }
     }
-
-    if (currentGuessCount >= maxGuesses) {
-        endGame();
-    }
-}
 }
 
 function endGame(correctInputElement = null, gameWon = false) {
     gameState = 'end'; // Set game state to 'end'
     recordScore(currentGuessCount, gameWon);
     displayStats(); 
+    window.localStorage.setItem('completedToday', true);
+    window.localStorage.setItem('gameState', 'end');
 
     // Highlight the correct input field in green, if provided
     if (correctInputElement) {
@@ -186,12 +240,15 @@ function indicateHighLow(inputElement, guessValue, color) {
     inputElement.style.backgroundColor = color;
 
     const addButton = inputElement.nextElementSibling;
-    console.log(addButton)
     if (addButton && addButton.classList.contains('add-button')) {
-        console.log("Updating Add button: ", guessValue, productPrice); // Debug log
-        addButton.textContent = guessValue > productPrice ? '↓ DOWN' : '↑ UP';
-    } else {
-        console.log("Next sibling is not an Add button: ", addButton); // Debug log
+        if (guessValue == productPrice) {
+            addButton.textContent = 'Correct!'
+        } else {
+            addButton.textContent = guessValue > productPrice ? '↓ DOWN' : '↑ UP';
+        }
+        // Save the updated guess details to localStorage
+        const guessDetails = { value: inputElement.value, color, buttonText: addButton.textContent };
+        window.localStorage.setItem(currentGuessCount - 1, JSON.stringify(guessDetails));
     }
 }
 
@@ -226,3 +283,5 @@ getTodaysProduct().then(product => {
         }
     }
 });
+
+
