@@ -294,10 +294,7 @@ function displayStats() {
         // Disable the mode bar
         displayModeBar: false
     };
-
-    // Use Plotly to create the bar chart in the 'statsContainer' div
-    Plotly.newPlot('statsContainer', data, layout, {staticPlot: true});
-
+    
     // Now, handle the display of total points and games in 'pointsContainer'
     const pointsContainer = document.getElementById('pointsContainer');
     pointsContainer.innerHTML = ''; // Clear previous contents
@@ -311,6 +308,12 @@ function displayStats() {
     const totalGamesElement = document.createElement('div');
     totalGamesElement.textContent = `Total Games: ${stats.totalGames}`;
     pointsContainer.appendChild(totalGamesElement);
+    
+    if (stats.totalGames > 0) {
+    // Use Plotly to create the bar chart in the 'statsContainer' div
+    Plotly.newPlot('statsContainer', data, layout, {staticPlot: true});
+    }
+
 }
 
 
