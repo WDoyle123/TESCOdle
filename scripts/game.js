@@ -52,6 +52,7 @@ function resetGameState() {
     window.localStorage.removeItem('completedToday');
     window.localStorage.removeItem('lastPlayed');
     window.localStorage.removeItem('gameState'); // Reset the saved game state
+    window.localStorage.removeItem('priceReveal');
 }
 
 function dateDiffInDays(date1, date2) {
@@ -76,6 +77,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let restoredCount = 0;
     const savedGameState = window.localStorage.getItem('gameState');
+
+    if (savedGameState == 'end') {
+        const price = document.getElementById('productPrice');
+        price.textContent = window.localStorage.getItem('priceReveal');
+
+    }
+
 
     for (let i = 0; i < maxGuesses; i++) {
         const savedGuess = window.localStorage.getItem(i);
@@ -207,6 +215,7 @@ function endGame(correctInputElement = null, gameWon = false) {
     // Reveal the actual price
     if (productPriceElement) {
         productPriceElement.textContent = `£${productPrice.toFixed(2)}`;
+        window.localStorage.setItem('priceReveal', productPriceElement.textContent);
     }
 
     disableAllInputsAndButtons(); // Disable inputs and buttons
@@ -278,7 +287,7 @@ getTodaysProduct().then(product => {
         if (productNameElement) {
             productNameElement.textContent = product.Product;
         }
-        if (productPriceElement) {
+        if (productPriceElement.textContent == '') {
             productPriceElement.textContent = "£?.??";
         }
         if (productImageElement) {
