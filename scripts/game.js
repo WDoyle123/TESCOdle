@@ -262,10 +262,10 @@ function displayStats() {
         x: yValues,
         y: xValues,
         type: 'bar',
-        orientation: 'h', // Horizontal bars
+        orientation: 'h',
         text: yValues.map(String),
         textposition: 'auto',
-        hoverinfo: 'none', // Removes hover text
+        hoverinfo: 'none',
         marker: {
             color: 'rgb(158,202,225)',
             opacity: 0.6,
@@ -278,44 +278,67 @@ function displayStats() {
 
     var data = [trace1];
 
-    var layout = {
-        barmode: 'stack',
-        width: 150, // Adjusted for the container size
-        height: 250, // You may need to adjust the height as well
-        margin: {
-            l: 40, // Left margin
-            r: 10, // Right margin
-            t: 20, // Top margin
-            b: 20, // Bottom margin
-        },
-        font: {
-            size: 8 // Reduced font size
-        },
-        // Disable the mode bar
-        displayModeBar: false
-    };
-    
-    // Now, handle the display of total points and games in 'pointsContainer'
-    const pointsContainer = document.getElementById('pointsContainer');
-    pointsContainer.innerHTML = ''; // Clear previous contents
+    // Plotly layout adjustments
+var layout = {
+    title: 'Guess Distribution',
+    barmode: 'stack',
+    width: 224,
+    height: 250,
+    margin: {
+        l: 40,
+        r: 10,
+        t: 20,
+        b: 20,
+    },
+    font: {
+        size: 8
+    },
+    xaxis: {
+        tickmode: 'linear', // Specifies that the tick mode is linear
+        dtick: 1, // Sets the interval between ticks to 1 (for integer steps)
+    },
+    yaxis: {
+        tickfont: {
+            margin: 20 // You can try adjusting this value too
+        }
+    },
+    displayModeBar: false
+};
 
-    // Display total points
+
+    // Display of total points and games
+    const pointsContainer = document.getElementById('pointsContainer');
+    pointsContainer.innerHTML = '';
     const totalPointsElement = document.createElement('div');
     totalPointsElement.textContent = `Total Points: ${stats.totalPoints}`;
     pointsContainer.appendChild(totalPointsElement);
-
-    // Display total games played
     const totalGamesElement = document.createElement('div');
     totalGamesElement.textContent = `Total Games: ${stats.totalGames}`;
     pointsContainer.appendChild(totalGamesElement);
-    
-    if (stats.totalGames > 0) {
-    // Use Plotly to create the bar chart in the 'statsContainer' div
-    Plotly.newPlot('statsContainer', data, layout, {staticPlot: true});
-    }
 
+    // Handle the display of the graph toggle button
+    const graphToggleButton = document.getElementById('graphToggleButton');
+    if (stats.totalGames > 0) {
+        graphToggleButton.style.display = 'block'; // Show button
+        Plotly.newPlot('statsContainer', data, layout, {staticPlot: true});
+    } else {
+        graphToggleButton.style.display = 'none'; // Hide button and graph
+        document.getElementById('statsContainer').style.display = 'none';
+    }
 }
 
+// Function to toggle the visibility of the graph
+function toggleGraphVisibility() {
+    const statsContainer = document.getElementById('statsContainer');
+    const graphToggleButton = document.getElementById('graphToggleButton');
+    if (statsContainer.style.display === 'none') {
+        statsContainer.style.display = 'block';
+        graphToggleButton.textContent = '-'; // Change symbol to '-'
+    } else {
+        statsContainer.style.display = 'none';
+        graphToggleButton.textContent = '+'; // Change symbol to '+'
+    }
+}
 
 function disableAllInputsAndButtons() {
     // Disable all input fields and 'Add' buttons

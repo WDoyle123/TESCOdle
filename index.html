@@ -126,26 +126,25 @@
             </div>
         </div>
 
-        <div id='stats-overlay' class='game-container' style='display: none;'>
-            <div class='info-card'>
-                <div class='stats-top'>
-                    <div class='clubcard-box'>
-                        <div class='title-box'>
-                            <p class='white-tescodle'>TESCOdle</p>
-                        </div>
-                        <p class='white-clubcard'>ClubCard</p>
-                    </div>
-                    <div id="pointsContainer"></div> <!-- This will display the points and total games -->
+<div id='stats-overlay' class='game-container' style='display: none;'>
+    <div class='info-card'>
+        <div class='stats-top'>
+            <div class='clubcard-box'>
+                <div class='title-box'>
+                    <p class='white-tescodle'>TESCOdle</p>
                 </div>
-                <div class='stats-bottom'>
-                    <div id="statsContainer"></div>
-                    <div class='how-stats'>
-                        <p>Each day your score gets calculated</p>
-                    </div>
-                </div>
+                <p class='white-clubcard'>ClubCard</p>
             </div>
-        </div>
+            <div id="pointsContainer"></div> <!-- Displays the points and total games -->
 
+            <!-- Clickable symbol/button for showing/hiding the graph -->
+            <button class='toggle-graph' id="graphToggleButton" onclick="toggleGraphVisibility()" style="display: none;">+</button>
+        </div>
+        <div class='stats-bottom'>
+            <div class='graph' id="statsContainer" style="display: none;"></div> <!-- Graph is displayed here -->
+        </div>
+    </div>
+</div>
 
         <footer class="site-footer">
             <div id="footer-container">
