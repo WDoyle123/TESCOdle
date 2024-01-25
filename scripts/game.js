@@ -28,11 +28,16 @@ async function getTodaysProduct() {
     const todayStr = today.toDateString();
     const lastPlayedStr = window.localStorage.getItem('lastPlayed');
 
-    // Reset the game state if the day has changed
+    // Check if a new day has started
     if (lastPlayedStr !== todayStr) {
         resetGameState();
         window.localStorage.setItem('lastPlayed', todayStr);
+
+        // Refresh the page to reset the game state for the new day
+        window.location.reload();
+        return;
     }
+
     if (dayIndex >= 0 && dayIndex < parsedData.length) {
         return parsedData[dayIndex];
     } else {
@@ -177,11 +182,22 @@ function checkGuess(inputElement) {
 }
 
 function endGame(correctInputElement = null, gameWon = false) {
+    if (gameState === 'end') {
+        // Game has already ended, do not proceed further
+        return;
+    }
+
     gameState = 'end'; // Set game state to 'end'
-    recordScore(currentGuessCount, gameWon);
-    displayStats(); 
-    window.localStorage.setItem('completedToday', true);
     window.localStorage.setItem('gameState', 'end');
+
+    if (gameWon) {
+        recordScore(currentGuessCount);
+    } else if (currentGuessCount >= maxGuesses) {
+        // Handle case where all guesses are used but the last guess is not correct
+        recordScore(currentGuessCount);
+    }
+
+    displayStats();
 
     // Highlight the correct input field in green, if provided
     if (correctInputElement) {
@@ -196,12 +212,12 @@ function endGame(correctInputElement = null, gameWon = false) {
     disableAllInputsAndButtons(); // Disable inputs and buttons
 }
 
-function recordScore(score, gameWon) {
+function recordScore(score) {
     let stats = JSON.parse(localStorage.getItem('gameStats')) || { scores: {}, totalGames: 0 };
-    if (gameWon) {
-        stats.scores[score] = (stats.scores[score] || 0) + 1;
-    }
+
+    stats.scores[score] = (stats.scores[score] || 0) + 1;
     stats.totalGames += 1;
+
     localStorage.setItem('gameStats', JSON.stringify(stats));
 }
 
@@ -241,7 +257,7 @@ function indicateHighLow(inputElement, guessValue, color) {
 
     const addButton = inputElement.nextElementSibling;
     if (addButton && addButton.classList.contains('add-button')) {
-        if (guessValue == productPrice) {
+        if (color == 'lightgreen') {
             addButton.textContent = 'Correct!'
         } else {
             addButton.textContent = guessValue > productPrice ? '↓ DOWN' : '↑ UP';
