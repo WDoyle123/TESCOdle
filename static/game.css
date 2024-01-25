@@ -143,3 +143,40 @@
     border: none;
     cursor: pointer;
 }
+
+.error-message {
+    color: red;
+    font-size: 0.8em;
+    margin-top: 5px;
+    animation: fadeOut 3s ease-in-out;
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.bar-chart-container {
+    width: 100%;
+}
+
+.bar-container {
+    background-color: #eee; /* Light grey background */
+    margin-bottom: 5px;
+}
+
+.bar {
+    background-color: #00539f; /* Use your primary color here */
+    color: white;
+    text-align: center;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.score-bar {
+    background-color: #4caf50; /* Example color */
+    color: white;
+    padding: 10px;
+    margin: 2px 0;
+}
+

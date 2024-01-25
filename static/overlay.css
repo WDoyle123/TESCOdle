@@ -80,3 +80,102 @@ p {
     align-items:center;
     border: none;
 }
+
+.clubcard-box {
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 200px;
+    height: 75px;
+    background: #00539f;
+    color: white; 
+    font-size: 24px;
+    font-weight: 1000;
+    margin-bottom:15px;
+    border-radius: 5px;
+}
+
+.stats-top {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    padding-bottom: 10px;
+}
+
+.stats-bottom {
+    width:100%;
+}
+
+.title-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100px; /* Use 100% to take the full width of the parent */
+}
+
+.white-tescodle {
+    font-family: 'Newtext Bold', sans-serif;
+    font-weight: 400;
+    margin-top: 5px;
+    font-size: 12px;
+    cursor: pointer;
+    position: relative; /* This is needed to position the :after pseudo-element */
+    padding-bottom: 4px; /* Space for the border */
+    display: inline-block; /* This will make the element only as wide as its content */
+}
+
+.white-tescodle:after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px; /* Height of the border */
+    width: 100%; /* Set the width to 100% of the parent element */
+    background-image: linear-gradient(to right, white 50%, transparent 50%);
+    background-size: 15px 4px; /* Width of dashes and height of the border */
+    background-repeat: repeat-x;
+}
+
+.white-clubcard {
+    font-size: 24px;
+    margin-top: -10px;
+}
+
+.how-stats {
+    margin-top: 10px;
+    text-align:center;
+}
+
+.scoring-section {
+    font-size: 12px;
+    background-color: #f6f6f6;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.scoring-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.scoring-list li {
+    margin-bottom: 5px;
+}
+
+.score-type {
+    font-weight: bold;
+    color: black;
+}
+
+.score-points {
+    float: right;
+    color: #00539f;
+}
+

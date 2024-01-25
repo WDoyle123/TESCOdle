@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="static/overlay.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=VT323&display=swap">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
         <!-- Additional meta tags and scripts can be included here -->
     </head>
     <body>
@@ -75,6 +76,20 @@
                     <p>The aim of the game is to correctly guess the price of the Tesco product.</p>
                     <p>If your guess is within 5% of the correct price, you win.</p>
                 </div>
+
+                <div class='how-to-title'>
+                    Scoring:
+                </div>
+                <p>In Tescodle, your scoring depends on the number of guesses it takes to correctly predict the product's price. Fewer guesses mean more points, as detailed below:</p>
+                <div class='how-to-rules scoring-section'>
+                    <ul class="scoring-list">
+                        <li><span class="score-type">One Guess:</span> <span class="score-points">10 points</span></li>
+                        <li><span class="score-type">Two Guesses:</span> <span class="score-points">5 points</span></li>
+                        <li><span class="score-type">Three Guesses:</span> <span class="score-points">2 points</span></li>
+                        <li><span class="score-type">Four Guesses:</span> <span class="score-points">1 point</span></li>
+                    </ul>
+                </div>
+
                 <div class='how-to-title'>
                     Examples:
                 </div>
@@ -113,11 +128,20 @@
 
         <div id='stats-overlay' class='game-container' style='display: none;'>
             <div class='info-card'>
-                <div class='how-to-title'>
-                <div id="statsContainer"></div>
+                <div class='stats-top'>
+                    <div class='clubcard-box'>
+                        <div class='title-box'>
+                            <p class='white-tescodle'>TESCOdle</p>
+                        </div>
+                        <p class='white-clubcard'>ClubCard</p>
+                    </div>
+                    <div id="pointsContainer"></div> <!-- This will display the points and total games -->
                 </div>
-                <div class='how-to-rules'>
-                    <p>Each day your score gets calculated</p>
+                <div class='stats-bottom'>
+                    <div id="statsContainer"></div>
+                    <div class='how-stats'>
+                        <p>Each day your score gets calculated</p>
+                    </div>
                 </div>
             </div>
         </div>

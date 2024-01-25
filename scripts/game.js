@@ -121,7 +121,7 @@ function addGuessInput(guessDetails = null, isRestored = false) {
     const newInput = document.createElement('input');
     newInput.className = 'price-form';
     newInput.type = 'text';
-    newInput.placeholder = 'Enter Price...';
+    newInput.placeholder = '0.00';
     newInput.id = 'guess' + guessIndex;
 
     // Create a new 'Add' button
@@ -222,34 +222,95 @@ function endGame(correctInputElement = null, gameWon = false) {
 }
 
 function recordScore(score) {
-    let stats = JSON.parse(localStorage.getItem('gameStats')) || { scores: {}, totalGames: 0 };
+    let stats = JSON.parse(localStorage.getItem('gameStats')) || { 
+        scores: {}, 
+        totalGames: 0, 
+        totalPoints: 0 
+    };
+
+    // Scoring system with points
+    const pointsMap = { 1: 10, 2: 5, 3: 2, 4: 1 };
 
     stats.scores[score] = (stats.scores[score] || 0) + 1;
     stats.totalGames += 1;
+    stats.totalPoints += (pointsMap[score] || 0);
 
     localStorage.setItem('gameStats', JSON.stringify(stats));
 }
 
 function displayStats() {
-    // Retrieve stats from localStorage or initialize if not present
-    let stats = JSON.parse(localStorage.getItem('gameStats')) || { scores: {}, totalGames: 0 };
-    const statsContainer = document.getElementById('statsContainer');
+    let stats = JSON.parse(localStorage.getItem('gameStats')) || { 
+        scores: {}, 
+        totalGames: 0, 
+        totalPoints: 0 
+    };
 
-    // Clear previous stats display
-    statsContainer.innerHTML = '';
+    const xValues = []; // Scores (1, 2, 3, 4)
+    const yValues = []; // Number of times each score was achieved
 
-    // Display scores for each guess count
+    // Prepare data for Plotly
     for (let i = 1; i <= maxGuesses; i++) {
-        const scoreCount = stats.scores[i] || 0;
-        const scoreElement = document.createElement('div');
-        scoreElement.textContent = `Score ${i}: ${scoreCount}`;
-        statsContainer.appendChild(scoreElement);
+        xValues.push(`Score ${i}`);
+        yValues.push(stats.scores[i] || 0);
     }
+    // Reverse the data arrays to order the bars correctly
+    xValues.reverse();
+    yValues.reverse();
+
+    // Plotly data trace
+    var trace1 = {
+        x: yValues,
+        y: xValues,
+        type: 'bar',
+        orientation: 'h', // Horizontal bars
+        text: yValues.map(String),
+        textposition: 'auto',
+        hoverinfo: 'none', // Removes hover text
+        marker: {
+            color: 'rgb(158,202,225)',
+            opacity: 0.6,
+            line: {
+                color: 'rgb(8,48,107)',
+                width: 1.5
+            }
+        }
+    };
+
+    var data = [trace1];
+
+    var layout = {
+        barmode: 'stack',
+        width: 150, // Adjusted for the container size
+        height: 250, // You may need to adjust the height as well
+        margin: {
+            l: 40, // Left margin
+            r: 10, // Right margin
+            t: 20, // Top margin
+            b: 20, // Bottom margin
+        },
+        font: {
+            size: 8 // Reduced font size
+        },
+        // Disable the mode bar
+        displayModeBar: false
+    };
+
+    // Use Plotly to create the bar chart in the 'statsContainer' div
+    Plotly.newPlot('statsContainer', data, layout, {staticPlot: true});
+
+    // Now, handle the display of total points and games in 'pointsContainer'
+    const pointsContainer = document.getElementById('pointsContainer');
+    pointsContainer.innerHTML = ''; // Clear previous contents
+
+    // Display total points
+    const totalPointsElement = document.createElement('div');
+    totalPointsElement.textContent = `Total Points: ${stats.totalPoints}`;
+    pointsContainer.appendChild(totalPointsElement);
 
     // Display total games played
     const totalGamesElement = document.createElement('div');
     totalGamesElement.textContent = `Total Games: ${stats.totalGames}`;
-    statsContainer.appendChild(totalGamesElement);
+    pointsContainer.appendChild(totalGamesElement);
 }
 
 
