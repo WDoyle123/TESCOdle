@@ -96,6 +96,7 @@ footer {
     background-position: left bottom;
     padding-bottom: 10px; /* Space for the border */
     cursor: pointer;
+    user-select: none; /* Prevent text selection */
 }
 
 .info-button {

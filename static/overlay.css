@@ -126,10 +126,10 @@ p {
     font-weight: 400;
     margin-top: 5px;
     font-size: 12px;
-    cursor: pointer;
     position: relative; /* This is needed to position the :after pseudo-element */
     padding-bottom: 4px; /* Space for the border */
     display: inline-block; /* This will make the element only as wide as its content */
+    user-select: none; /* Prevent text selection */
 }
 
 .white-tescodle:after {
@@ -148,6 +148,7 @@ p {
 .white-clubcard {
     font-size: 24px;
     margin-top: -10px;
+    user-select: none; /* Prevent text selection */
 }
 
 .how-stats {
