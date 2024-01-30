@@ -71,10 +71,24 @@ npm start # or python -m http.server
 
 See [LICENCE](LICENCE)
 
+## Disclaimer
+
+### No Affiliation with Tesco
+"TESCOdle" is an independent project developed for educational and entertainment purposes. It is not affiliated with, endorsed by, sponsored by, or in any way officially connected with Tesco plc or any of its subsidiaries or affiliates. The official Tesco website can be found at www.tesco.com.
+
+### Use of Trademarks
+All trademarks, service marks, trade names, trade dress, product names, and logos appearing in this project are the property of their respective owners. Any rights not expressly granted herein are reserved. The use of Tesco's trademarks in this project is for descriptive purposes only and does not imply any endorsement by Tesco.
+
+### Data Usage
+This project may use data sourced from Tesco for demonstration purposes. The data is used under fair use policy and is not intended for commercial exploitation or to infringe on Tesco's rights. This project does not monetise any data belonging to Tesco.
+
+### No Warranty
+This project is provided "as is", without warranty of any kind, express or implied. The developers of "TESCOdle" assume no responsibility for errors or omissions in the contents of the project.
+
 ## Acknowledgements
 
 - My friend Henry, for suggesting an adaption of Costcodle to suit a British audience.
 
 - Kerm, for his work on [Costcodle](https://github.com/KermWasTaken/costcodle) from which inspired TESCOdle.
 
-- Tesco, for the source of the data.
+- Tesco, for obvious reasons!
