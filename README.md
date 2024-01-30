@@ -69,7 +69,7 @@ npm start # or python -m http.server
 
 ## Licence
 
-See [LICENCE](LICENCE)
+See [LICENSE](LICENSE)
 
 ## Disclaimer
 
