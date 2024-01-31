@@ -139,6 +139,11 @@ function addGuessInput(guessDetails = null, isRestored = false) {
     }
 
     addButton.onclick = () => {
+
+        if (newInput.value.trim() === '') {
+            return; // Do nothing if the input is empty
+        }
+
         if (!newInput.disabled) {
             checkGuess(newInput);
             newInput.disabled = true;
@@ -159,6 +164,12 @@ function addGuessInput(guessDetails = null, isRestored = false) {
 }
 
 function checkGuess(inputElement) {
+
+    // Check if the input is empty and return if true
+    if (inputElement.value.trim() === '') {
+        return;
+    }
+
     const guessValue = parseFloat(inputElement.value);
     if (!isNaN(guessValue)) {
         const lowerBound = productPrice * 0.95; // CORRECT
