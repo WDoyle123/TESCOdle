@@ -136,33 +136,43 @@ function addGuessInput(guessDetails = null, isRestored = false) {
         addButton.textContent = guessDetails.buttonText;
         newInput.disabled = true;
         addButton.disabled = true;
+    } else {
+        setTimeout(() => newInput.focus(), 0); 
     }
 
     addButton.onclick = () => {
-
-        if (newInput.value.trim() === '') {
-            return; // Do nothing if the input is empty
-        }
-
-        if (!newInput.disabled) {
-            checkGuess(newInput);
-            newInput.disabled = true;
-            addButton.disabled = true;
-        }
-
-        if (currentGuessCount < maxGuesses && gameState !== 'end') {
-            addGuessInput();
-        }
+        submitGuess(newInput, addButton);
     };
 
-    // Append new input and button to the container
+    // Properly close the addButton onclick event and add event listener outside of it
+    newInput.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter' || event.keyCode === 13) {
+            submitGuess(newInput, addButton);
+        }
+    });
+
+    // Append the newInput and addButton to the guessInputContainer or another element
     guessInputContainer.appendChild(newInput);
     guessInputContainer.appendChild(addButton);
 
-    currentGuessCount++;
-    updateGuessCounter();
+    currentGuessCount++; // Assuming you're keeping track of the number of guesses
 }
 
+function submitGuess(newInput, addButton) {
+    if (newInput.value.trim() === '') {
+        return; // Do nothing if the input is empty
+    }
+
+    if (!newInput.disabled) {
+        checkGuess(newInput); // Assuming checkGuess is defined elsewhere
+        newInput.disabled = true;
+        addButton.disabled = true;
+    }
+
+    if (currentGuessCount < maxGuesses && gameState !== 'end') {
+        addGuessInput();
+    }
+}
 function checkGuess(inputElement) {
 
     // Check if the input is empty and return if true
