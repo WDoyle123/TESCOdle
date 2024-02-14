@@ -1,3 +1,4 @@
+FROM --platform=linux/amd64 node
 FROM nginx:alpine
 
 RUN rm -rf /usr/share/nginx/html/*
