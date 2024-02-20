@@ -142,6 +142,7 @@ function addGuessInput(guessDetails = null, isRestored = false) {
 
     addButton.onclick = () => {
         submitGuess(newInput, addButton);
+        updateGuessCounter();
     };
 
     // Properly close the addButton onclick event and add event listener outside of it
@@ -171,6 +172,7 @@ function submitGuess(newInput, addButton) {
 
     if (currentGuessCount < maxGuesses && gameState !== 'end') {
         addGuessInput();
+
     }
 }
 function checkGuess(inputElement) {
