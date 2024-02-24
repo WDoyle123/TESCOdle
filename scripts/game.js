@@ -172,7 +172,6 @@ function submitGuess(newInput, addButton) {
 
     if (currentGuessCount < maxGuesses && gameState !== 'end') {
         addGuessInput();
-
     }
 }
 function checkGuess(inputElement) {
