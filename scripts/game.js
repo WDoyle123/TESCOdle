@@ -224,7 +224,6 @@ function endGame(correctInputElement = null, gameWon = false) {
         recordScore(currentGuessCount);
     } else if (currentGuessCount >= maxGuesses) {
         // Handle case where all guesses are used but the last guess is not correct
-        recordScore(currentGuessCount);
     }
 
     displayStats();
