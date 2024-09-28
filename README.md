@@ -92,3 +92,7 @@ This project is provided "as is", without warranty of any kind, express or impli
 - Kerm, for his work on [Costcodle](https://github.com/KermWasTaken/costcodle) from which inspired TESCOdle.
 
 - Tesco, for obvious reasons!
+
+## Clips
+
+- [Sideshow playing TESCOdle](https://www.twitch.tv/videos/2262479372?t=07h10m16s)
