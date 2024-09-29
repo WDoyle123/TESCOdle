@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tescodle-deployment
+  namespace: tescodle
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tescodle
+  template:
+    metadata:
+      labels:
+        app: tescodle
+    spec:
+      containers:
+      - name: tescodle
+        image: wdoyle123/tescodle:1.0
+        ports:
+        - containerPort: 80
