@@ -1,19 +1,40 @@
-.zoom-wrapper {
-    zoom: 1.5;
+:root {
+    --zoom-factor-desktop: 1.5;
+    --zoom-factor-mobile: 1.0;
+}
 
+.zoom-wrapper {
+    /* Default zoom or scale for mobile */
+    zoom: var(--zoom-factor-mobile);
+    
     /* For Firefox, which doesn't support zoom, use transform */
-    -moz-transform: scale(1.5);
+    -moz-transform: scale(var(--zoom-factor-mobile));
     -moz-transform-origin: top left;
 
     /* Standard transform for other browsers */
-    transform: scale(1.5);
+    transform: scale(var(--zoom-factor-mobile));
     transform-origin: top left;
 
     /* Adjust the width to compensate for scaling */
-    width: calc(100% / 1.5);
+    width: calc(100% / var(--zoom-factor-mobile));
     
     /* Prevent horizontal scrollbars */
     overflow-x: hidden;
 }
 
+/* For screens wider than 768px (desktop or tablets) */
+@media (min-width: 768px) {
+    .zoom-wrapper {
+        zoom: var(--zoom-factor-desktop);
+        
+        /* For Firefox */
+        -moz-transform: scale(var(--zoom-factor-desktop));
+        
+        /* Standard transform */
+        transform: scale(var(--zoom-factor-desktop));
+
+        /* Adjust the width */
+        width: calc(100% / var(--zoom-factor-desktop));
+    }
+}
 
