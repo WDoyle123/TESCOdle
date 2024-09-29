@@ -1,0 +1,19 @@
+.zoom-wrapper {
+    zoom: 1.5;
+
+    /* For Firefox, which doesn't support zoom, use transform */
+    -moz-transform: scale(1.5);
+    -moz-transform-origin: top left;
+
+    /* Standard transform for other browsers */
+    transform: scale(1.5);
+    transform-origin: top left;
+
+    /* Adjust the width to compensate for scaling */
+    width: calc(100% / 1.5);
+    
+    /* Prevent horizontal scrollbars */
+    overflow-x: hidden;
+}
+
+

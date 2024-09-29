@@ -2,166 +2,168 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <!-- Corrected the viewport meta tag -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>TESCOdle</title>
         <link rel="stylesheet" href="static/header.css">
         <link rel="stylesheet" href="static/game.css">
         <link rel="stylesheet" href="static/overlay.css">
+        <link rel="stylesheet" href="static/zoom.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=VT323&display=swap">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
         <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
         <link rel="icon" type="image/svg+xml" href="static/tesco-favicon.svg">
-        <!-- Additional meta tags and scripts can be included here -->
     </head>
     <body>
-
-        <header class='site-header'>
-            <div id="header-container">
-                <button id="info-button" class="info-button" data-overlay="info-overlay" type="button">?</button>
-                <h1 id='title' class="title"><span class="title-tesco">TESCO</span>dle</h1>
-                <img src="static/stat-logo.svg" id="stats-button" data-overlay="stats-overlay">
-            </div>
-        </header>
-
-        <main class='game-container'>
-            <div class='info-card'>
-                <div class='product-top'>
-                    <!-- IMAGE PLACEHOLDER -->
-                    <div class='img-container'>
-                        <img id="productImage" src="" class="img-product" alt="Product Image">
-                    </div>
+        <!-- Added Zoom Wrapper -->
+        <div class="zoom-wrapper">
+            <header class='site-header'>
+                <div id="header-container">
+                    <button id="info-button" class="info-button" data-overlay="info-overlay" type="button">?</button>
+                    <h1 id='title' class="title"><span class="title-tesco">TESCO</span>dle</h1>
+                    <img src="static/stat-logo.svg" id="stats-button" data-overlay="stats-overlay">
                 </div>
+            </header>
 
-                <div class='product-bottom'>
-                    <!-- PRODUCT INFO PLACEHOLDER -->
-                    <div id="productName" class='product-info'>
-                        Product Name
+            <main class='game-container'>
+                <div class='info-card'>
+                    <div class='product-top'>
+                        <!-- IMAGE PLACEHOLDER -->
+                        <div class='img-container'>
+                            <img id="productImage" src="" class="img-product" alt="Product Image">
+                        </div>
                     </div>
 
-                    <div class='clubcard'>
-                        <div class='blue-square'>
+                    <div class='product-bottom'>
+                        <!-- PRODUCT INFO PLACEHOLDER -->
+                        <div id="productName" class='product-info'>
+                            Product Name
+                        </div>
 
-                            <div class='yellow-circle'>
-                                <div class='guess-text'>
-                                    Guess
+                        <div class='clubcard'>
+                            <div class='blue-square'>
+                                <div class='yellow-circle'>
+                                    <div class='guess-text'>
+                                        Guess
+                                    </div>
                                 </div>
                             </div>
+                            <!-- PLACE HOLDER COUNTER -->
+                            <div class='guess-count'>
+                            </div>
                         </div>
-                        <!-- PLACE HOLDER COUNTER -->
-                        <div class='guess-count'>
-                        </div>
-                    </div>
 
-                    <div class='how-to'>
-                        Type the correct total of the product listed
-                    </div>
+                        <div class='how-to'>
+                            Type the correct total of the product listed
+                        </div>
 
-                    <!-- DON'T FORGET TO HIDE THIS -->
-                    <div id='productPrice' class='hidden-price'>
-                        £?.??
-                    </div>
+                        <!-- DON'T FORGET TO HIDE THIS -->
+                        <div id='productPrice' class='hidden-price'>
+                            £?.??
+                        </div>
 
-                    <div class="enter-price" id="guessInputs">
-                        <!-- The initial input form will be added by JavaScript -->
-                    </div>
-                </div>
-            </div>
-            </div>
-        </main>
-        <div id="info-overlay" class='game-container' style="display: none;">
-            <div class='info-card'>
-                <div class='how-to-title'>
-                    How To Play:
-                </div>
-                <div class='how-to-rules'>
-                    <p>The aim of the game is to correctly guess the price of the Tesco product.</p>
-                    <p>If your guess is within 5% of the correct price, you win.</p>
-                </div>
-
-                <div class='how-to-title'>
-                    Scoring:
-                </div>
-                <p>In Tescodle, your scoring depends on the number of guesses it takes to correctly predict the product's price. Fewer guesses mean more points, as detailed below:</p>
-                <div class='how-to-rules scoring-section'>
-                    <ul class="scoring-list">
-                        <li><span class="score-type">One Guess:</span> <span class="score-points">10 points</span></li>
-                        <li><span class="score-type">Two Guesses:</span> <span class="score-points">5 points</span></li>
-                        <li><span class="score-type">Three Guesses:</span> <span class="score-points">2 points</span></li>
-                        <li><span class="score-type">Four Guesses:</span> <span class="score-points">1 point</span></li>
-                    </ul>
-                </div>
-
-                <div class='how-to-title'>
-                    Examples:
-                </div>
-                <p>Your guess is compared against the product's actual price, with bounds determining its accuracy. Below, visual indicators show how close your guess aligns within these bounds.</p>
-                <div class='how-to-rules'>
-                    <div class='colour-demo'>
-                        <div class="colour-explanation">
-                            <input class='red-demo' value="0.50" disabled></input>
-                            <span class='blue-text'>More than 25%</span>
-                        </div>
-                        <div class="colour-explanation">
-                            <input class='orange-demo' value="2.00" disabled></input>
-                            <span class='blue-text'>25% to 11%</span>
-                        </div>
-                        <div class="colour-explanation">
-                            <input class='yellow-demo' value="2.35" disabled></input>
-                            <span class='blue-text'>10% to 6%</span>
-                        </div>
-                        <div class="colour-explanation">
-                            <input class='green-demo' value="2.55" disabled></input>
-                            <span class='blue-text'>Within 5%</span>
-                        </div>
-                        <div class="colour-explanation">
-                            <button class='add-button-demo'>↑ UP</button>
-                            <span class='blue-text'>Guess too low</span>
-                        </div>
-                        <div class="colour-explanation">
-                            <button class='add-button-demo'>↓ DOWN</button>
-                            <span class='blue-text'>Guess too high</span>
+                        <div class="enter-price" id="guessInputs">
+                            <!-- The initial input form will be added by JavaScript -->
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </main>
 
-<div id='stats-overlay' class='game-container' style='display: none;'>
-    <div class='info-card'>
-        <div class='stats-top'>
-            <div class='clubcard-box'>
-                <div class='title-box'>
-                    <p class='white-tescodle'>TESCOdle</p>
+            <div id="info-overlay" class='game-container' style="display: none;">
+                <div class='info-card'>
+                    <div class='how-to-title'>
+                        How To Play:
+                    </div>
+                    <div class='how-to-rules'>
+                        <p>The aim of the game is to correctly guess the price of the Tesco product.</p>
+                        <p>If your guess is within 5% of the correct price, you win.</p>
+                    </div>
+
+                    <div class='how-to-title'>
+                        Scoring:
+                    </div>
+                    <p>In Tescodle, your scoring depends on the number of guesses it takes to correctly predict the product's price. Fewer guesses mean more points, as detailed below:</p>
+                    <div class='how-to-rules scoring-section'>
+                        <ul class="scoring-list">
+                            <li><span class="score-type">One Guess:</span> <span class="score-points">10 points</span></li>
+                            <li><span class="score-type">Two Guesses:</span> <span class="score-points">5 points</span></li>
+                            <li><span class="score-type">Three Guesses:</span> <span class="score-points">2 points</span></li>
+                            <li><span class="score-type">Four Guesses:</span> <span class="score-points">1 point</span></li>
+                        </ul>
+                    </div>
+
+                    <div class='how-to-title'>
+                        Examples:
+                    </div>
+                    <p>Your guess is compared against the product's actual price, with bounds determining its accuracy. Below, visual indicators show how close your guess aligns within these bounds.</p>
+                    <div class='how-to-rules'>
+                        <div class='colour-demo'>
+                            <div class="colour-explanation">
+                                <input class='red-demo' value="0.50" disabled></input>
+                                <span class='blue-text'>More than 25%</span>
+                            </div>
+                            <div class="colour-explanation">
+                                <input class='orange-demo' value="2.00" disabled></input>
+                                <span class='blue-text'>25% to 11%</span>
+                            </div>
+                            <div class="colour-explanation">
+                                <input class='yellow-demo' value="2.35" disabled></input>
+                                <span class='blue-text'>10% to 6%</span>
+                            </div>
+                            <div class="colour-explanation">
+                                <input class='green-demo' value="2.55" disabled></input>
+                                <span class='blue-text'>Within 5%</span>
+                            </div>
+                            <div class="colour-explanation">
+                                <button class='add-button-demo'>↑ UP</button>
+                                <span class='blue-text'>Guess too low</span>
+                            </div>
+                            <div class="colour-explanation">
+                                <button class='add-button-demo'>↓ DOWN</button>
+                                <span class='blue-text'>Guess too high</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <p class='white-clubcard'>ClubCard</p>
             </div>
-            <div id="pointsContainer"></div> <!-- Displays the points and total games -->
 
-            <!-- Clickable symbol/button for showing/hiding the graph -->
-            <button class='toggle-graph' id="graphToggleButton" onclick="toggleGraphVisibility()" style="display: none;">+</button>
-        </div>
-        <div class='stats-bottom'>
-            <div class='graph' id="statsContainer" style="display: none;"></div> <!-- Graph is displayed here -->
-        </div>
-    </div>
-</div>
+            <div id='stats-overlay' class='game-container' style='display: none;'>
+                <div class='info-card'>
+                    <div class='stats-top'>
+                        <div class='clubcard-box'>
+                            <div class='title-box'>
+                                <p class='white-tescodle'>TESCOdle</p>
+                            </div>
+                            <p class='white-clubcard'>ClubCard</p>
+                        </div>
+                        <div id="pointsContainer"></div> <!-- Displays the points and total games -->
 
-        <footer class="site-footer">
-            <div id="footer-container">
-                <p class='github'>
-                Check out <a href="https://github.com/wdoyle123/tescodle.git">Tescodle</a> on Github. Starring would be appreciated!
-                <a href='https://github.com/WDoyle123/TESCOdle/issues/new'>Report Bugs</a>
-                </p>
-
-                <p class="copyright">
-                &copy; [2024] William E. Doyle. Tescodle is not affiliated with Tesco. 
-                Tesco is a registered trademark of Tesco PLC and is used here under the principle of fair use.
-                </p>
+                        <!-- Clickable symbol/button for showing/hiding the graph -->
+                        <button class='toggle-graph' id="graphToggleButton" onclick="toggleGraphVisibility()" style="display: none;">+</button>
+                    </div>
+                    <div class='stats-bottom'>
+                        <div class='graph' id="statsContainer" style="display: none;"></div> <!-- Graph is displayed here -->
+                    </div>
+                </div>
             </div>
-        </footer>
 
-        <script src="scripts/header.js"></script>
-        <script src="scripts/game.js"></script>
+            <footer class="site-footer">
+                <div id="footer-container">
+                    <p class='github'>
+                        Check out <a href="https://github.com/wdoyle123/tescodle.git">Tescodle</a> on Github. Starring would be appreciated!
+                        <a href='https://github.com/WDoyle123/TESCOdle/issues/new'>Report Bugs</a>
+                    </p>
+
+                    <p class="copyright">
+                        &copy; [2024] William E. Doyle. Tescodle is not affiliated with Tesco. 
+                        Tesco is a registered trademark of Tesco PLC and is used here under the principle of fair use.
+                    </p>
+                </div>
+            </footer>
+
+            <script src="scripts/header.js"></script>
+            <script src="scripts/game.js"></script>
+        </div> <!-- End of Zoom Wrapper -->
     </body>
 </html>
 
