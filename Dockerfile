@@ -6,7 +6,6 @@ COPY index.html /usr/share/nginx/html/
 COPY sitemap.xml /usr/share/nginx/html/
 COPY static/ /usr/share/nginx/html/static/
 COPY scripts/ /usr/share/nginx/html/scripts/
-COPY figures/ /usr/share/nginx/html/public/
 
 EXPOSE 80
 
