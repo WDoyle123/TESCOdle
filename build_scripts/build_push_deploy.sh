@@ -1,6 +1,6 @@
 cd ..
 
-docker buildx build --platform linux/amd64,linux/arm64 . -t wdoyle123/tescodle:1.2 --push --no-cache
+docker buildx build --platform linux/amd64,linux/arm64 . -t wdoyle123/tescodle:1.1 --push --no-cache
 
 cd manifests
 

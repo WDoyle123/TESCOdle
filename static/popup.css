@@ -1,0 +1,82 @@
+/* Popup Overlay */
+.changelog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000; 
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Show the Overlay */
+.changelog-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Popup Content */
+.changelog-popup {
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+    animation: fadeInScale 0.3s ease;
+}
+
+/* Popup Header */
+.changelog-popup h2 {
+    margin-top: 0;
+    font-family: 'TESCOModern-Regular';
+    font-size: 1.5em;
+    color: #333;
+}
+
+/* Popup Content */
+.changelog-popup p,
+.changelog-popup ul {
+    font-size: 1em;
+    color: #555;
+    line-height: 1.5;
+    font-family: 'TESCOModern-Regular';
+
+}
+
+/* Close Button */
+.changelog-popup .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+    color: #aaa;
+    transition: color 0.2s ease;
+}
+
+.changelog-popup .close-btn:hover {
+    color: #000;
+}
+
+/* Animation */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
