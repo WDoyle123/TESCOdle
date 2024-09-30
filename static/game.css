@@ -189,3 +189,15 @@
     margin: 2px 0;
 }
 
+/* Remove the arrows on Chrome, Safari, Edge, Opera */
+.price-form::-webkit-outer-spin-button,
+.price-form::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Remove the arrows on Firefox */
+.price-form[type=number] {
+    -moz-appearance: textfield;
+}
+

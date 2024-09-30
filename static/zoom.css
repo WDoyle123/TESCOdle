@@ -1,0 +1,28 @@
+:root {
+    --zoom-factor-desktop: 1.5;
+    --zoom-factor-mobile: 1.0;
+}
+
+/* Default styles for mobile devices */
+.zoom-wrapper {
+    /* Mobile zoom or scale */
+    zoom: var(--zoom-factor-mobile);
+    -moz-transform: scale(var(--zoom-factor-mobile));
+    -moz-transform-origin: top left;
+    transform: scale(var(--zoom-factor-mobile));
+    transform-origin: top left;
+    width: calc(100% / var(--zoom-factor-mobile));
+    overflow-x: hidden;
+}
+
+/* Styles for devices with fine pointer (e.g., mouse) and hover capability */
+@media (hover: hover) and (pointer: fine) {
+    .zoom-wrapper {
+        /* Desktop zoom or scale */
+        zoom: var(--zoom-factor-desktop);
+        -moz-transform: scale(var(--zoom-factor-desktop));
+        transform: scale(var(--zoom-factor-desktop));
+        width: calc(100% / var(--zoom-factor-desktop));
+    }
+}
+
