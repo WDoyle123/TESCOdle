@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="static/zoom.css">
   <link rel="stylesheet" href="static/popup.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=VT323&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <link rel="icon" type="image/svg+xml" href="static/tesco-favicon.svg">
@@ -45,6 +46,13 @@
         <img src="static/stat-logo.svg" id="stats-button" data-overlay="stats-overlay">
       </div>
     </header>
+  
+    <div class="archive-container">
+        <button class="archive-arrows"><--</button>
+        <div class="archive-button-display" id="archive-display">YYYY-MM-DD</div> 
+        <input type="text" id="custom-date-picker" class="archive-button-input" style="display:none;"> 
+        <button class="archive-arrows">--></button>
+    </div>
 
     <main class='game-container'>
       <div class='info-card'>
@@ -189,6 +197,8 @@
     <script src="scripts/header.js"></script>
     <script src="scripts/game.js"></script>
     <script src="scripts/popup.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
   </div> <!-- End of Zoom Wrapper -->
 </body>
 
