@@ -48,10 +48,11 @@
     </header>
   
     <div class="archive-container">
-        <button class="archive-arrows"><--</button>
-        <div class="archive-button-display" id="archive-display">YYYY-MM-DD</div> 
-        <input type="text" id="custom-date-picker" class="archive-button-input" style="display:none;"> 
-        <button class="archive-arrows">--></button>
+        <button class="archive-arrows" id="archive-arrow-left">&lt;--</button>
+        <div class="archive-button-display-container">
+            <input type="date" id="custom-date-picker" class="archive-button-input" aria-label="Select date"> 
+        </div>
+        <button class="archive-arrows" id="archive-arrow-right">--&gt;</button>
     </div>
 
     <main class='game-container'>
