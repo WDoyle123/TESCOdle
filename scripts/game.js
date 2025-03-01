@@ -414,6 +414,12 @@ function endGame(correctInputElement = null, gameWon = false) {
   disableAllInputsAndButtons();
   console.log("All inputs and buttons disabled.");
 
+  // Show the share button when the game ends
+  const shareButton = document.getElementById('shareButton');
+  if (shareButton) {
+    shareButton.style.display = 'block';
+  }
+
   // **Debugging Logs**
   console.log(
     `Game Ended. Game Won: ${gameWon}. Price Revealed: £${productPrice.toFixed(
@@ -649,8 +655,27 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("Added a new guess input field.");
     }
 
+    // Show the share button if the game has ended
+    if (savedGameState === "end") {
+      const shareButton = document.getElementById('shareButton');
+      if (shareButton) {
+        shareButton.style.display = 'block';
+        console.log("Share button displayed for ended game.");
+      }
+    }
+
     updateGuessCounter();
     console.log("Updated guess counter display.");
+  });
+
+  document.getElementById('shareButton').addEventListener('click', () => {
+    // Check if any button has "Correct" text - this indicates a win
+    const guessInputs = document.querySelectorAll('.enter-price .add-button');
+    const hasCorrectGuess = Array.from(guessInputs).some(button => 
+      button.textContent.includes('Correct'));
+    
+    const resultText = generateGameResultText(hasCorrectGuess, currentGuessCount);
+    copyToClipboard(resultText);
   });
 });
 
@@ -680,4 +705,69 @@ document.addEventListener("DOMContentLoaded", () => {
 // 
 //  console.log(`Date object overridden. Current date is set to: ${mockedDate}`);
 //})();
+
+// Function to copy the game result to the clipboard
+function copyToClipboard(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      console.log('Game result copied to clipboard');
+    }).catch(err => {
+      console.error('Could not copy text: ', err);
+    });
+  } else {
+    // Fallback for browsers that do not support navigator.clipboard (chrome doesn't support without https)
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      document.execCommand('copy');
+      console.log('Fallback: Game result copied to clipboard');
+    } catch (err) {
+      console.error('Fallback: Could not copy text: ', err);
+    }
+    document.body.removeChild(textArea);
+  }
+}
+
+function generateGameResultText(gameWon, guessCount) {
+  let guessIndicators = [];
+  
+  // Get all the guess inputs from the DOM
+  const guessInputs = document.querySelectorAll('.enter-price .add-button');
+  
+  guessInputs.forEach((button, index) => {
+    if (index === guessCount - 1) {
+      guessIndicators.push(gameWon ? '✅' : '❌');
+    } else {
+      // Check if the button text contains "UP" or "DOWN"
+      const isUp = button.textContent.includes('UP');
+      const inputElement = button.previousElementSibling;
+      
+      // Get computed style to ensure we get the actual rendered color
+      const computedStyle = window.getComputedStyle(inputElement);
+      const backgroundColor = computedStyle.backgroundColor;
+      
+      let indicator;
+      // Check for orange (fed285 = rgb(254, 210, 133))
+      if (backgroundColor.includes('254, 210, 133') || backgroundColor.includes('rgb(254, 210, 133)')) {
+        indicator = isUp ? '⬆️🟧' : '⬇️🟧';
+      } 
+      // Check for yellow (fbfb70 = rgb(251, 251, 112))
+      else if (backgroundColor.includes('251, 251, 112') || backgroundColor.includes('rgb(251, 251, 112)')) {
+        indicator = isUp ? '⬆️🟨' : '⬇️🟨';
+      } 
+      // Default to red
+      else {
+        indicator = isUp ? '⬆️🟥' : '⬇️🟥';
+      }
+      
+      guessIndicators.push(indicator);
+    }
+  });
+
+  const guessDisplay = guessIndicators.join(' ');
+  return `Tescodle ${guessCount}/${maxGuesses} ${guessDisplay} https://tescodle.com`;
+}
 

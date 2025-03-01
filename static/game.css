@@ -201,3 +201,20 @@
     -moz-appearance: textfield;
 }
 
+.share-button {
+    font-family: 'TESCOModern-Regular';
+    font-weight: 600;
+    font-size: 12px;
+    background: #00539f;
+    border-radius: 20px;
+    height: 25px;
+    color: white; 
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+    width: 100%; 
+}
+
