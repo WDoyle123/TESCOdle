@@ -19,22 +19,21 @@
 
 <body>
 
-    <!-- Changelog Popup -->
-    <div id="changelog-overlay" class="changelog-overlay">
-      <div class="changelog-popup">
-        <button class="close-btn" id="changelog-close">&times;</button>
-        <h2>Changelog Version 1.1</h2>
+  <!-- Changelog Popup -->
+  <div id="changelog-overlay" class="changelog-overlay">
+    <div class="changelog-popup">
+      <button class="close-btn" id="changelog-close">&times;</button>
+      <h2>Changelog Version 1.2</h2>
+      <ul>
+        <li>feat: share button - <a href="https://github.com/wyOmar" target="_blank"
+            rel="noopener noreferrer">wyOmar</a></li>
+      </ul>
+      <h2>Work in Progress</h2>
+      <ul>
+        <li>feat: add archive mode</li>
         <ul>
-          <li>fix: guess counter reporting wrong guess count</li>
-          <li>fix: guess box can now only take integers</li>
-          <li>fix: zoom level on loading page</li>
-        </ul>
-        <h2>Work in Progress</h2>
-        <ul>
-          <li>feat: add archive mode</li>
-        <ul>
-      </div>
     </div>
+  </div>
 
   <!-- Added Zoom Wrapper -->
   <div class="zoom-wrapper">
@@ -86,6 +85,8 @@
           <div class="enter-price" id="guessInputs">
             <!-- The initial input form will be added by JavaScript -->
           </div>
+          <!-- Share button moved here -->
+          <button id="shareButton" class="share-button" style="display: none;">Share</button>
         </div>
       </div>
     </main>
@@ -167,6 +168,7 @@
         </div>
         <div class='stats-bottom'>
           <div class='graph' id="statsContainer" style="display: none;"></div> <!-- Graph is displayed here -->
+
         </div>
       </div>
     </div>
