@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: tescodle.williamdoyle.co.uk
+  - host: tescodle.com
     http:
       paths:
       - path: /
