@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: tescodle
-        image: wdoyle123/tescodle:1.2
+        image: wdoyle123/tescodle:1.3
         imagePullPolicy: Always
         ports:
         - containerPort: 80

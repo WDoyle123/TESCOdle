@@ -153,10 +153,11 @@ function addGuessInput(
   // Create a new input element
   const newInput = document.createElement("input");
   newInput.className = "price-form";
-  newInput.type = "number"; // Changed to 'number' for numeric input
+  newInput.type = "text"; // Allow commas as decimal separators on mobile
   newInput.placeholder = "0.00";
   newInput.id = "guess" + guessIndex;
-  newInput.setAttribute("inputmode", "decimal"); // Suggest numeric keypad on mobile
+  newInput.setAttribute("inputmode", "text"); // Allow comma key on keyboards that use it
+  newInput.setAttribute("pattern", "[0-9.,]*");
 
   // Create a new 'Add' button
   const addButton = document.createElement("button");
@@ -193,6 +194,33 @@ function addGuessInput(
       submitGuess(newInput, addButton, errorMessage);
     }
   });
+  newInput.addEventListener("keydown", function (event) {
+    const isCommaKey =
+      event.key === "," ||
+      event.key === "Decimal" ||
+      event.code === "Comma" ||
+      event.code === "NumpadDecimal" ||
+      event.code === "NumpadComma";
+    if (!isCommaKey) return;
+
+    event.preventDefault();
+    const start = newInput.selectionStart ?? newInput.value.length;
+    const end = newInput.selectionEnd ?? newInput.value.length;
+    newInput.value =
+      newInput.value.slice(0, start) + "," + newInput.value.slice(end);
+    const nextPos = start + 1;
+    if (typeof newInput.setSelectionRange === "function") {
+      newInput.setSelectionRange(nextPos, nextPos);
+    }
+    newInput.dispatchEvent(new Event("input", { bubbles: true }));
+  });
+  // Keep input limited to digits, dot, and comma.
+  newInput.addEventListener("input", function () {
+    const cleaned = filterPriceInput(newInput.value);
+    if (cleaned !== newInput.value) {
+      newInput.value = cleaned;
+    }
+  });
 
   // Append the newInput, addButton, and errorMessage to the guessInputContainer
   guessInputContainer.appendChild(newInput);
@@ -208,7 +236,7 @@ function addGuessInput(
 
 // Handle Guess Submission
 function submitGuess(newInput, addButton, errorMessage) {
-  const inputValue = newInput.value.trim();
+  const inputValue = normalisePriceInput(newInput.value);
 
   // Reset previous error message
   errorMessage.style.display = "none";
@@ -268,7 +296,7 @@ function submitGuess(newInput, addButton, errorMessage) {
 
 // Check the User's Guess
 function checkGuess(inputElement, errorMessage) {
-  const inputValue = inputElement.value.trim();
+  const inputValue = normalisePriceInput(inputElement.value);
   const guessValue = parseFloat(inputValue);
 
   if (isNaN(guessValue)) {
@@ -770,4 +798,3 @@ function generateGameResultText(gameWon, guessCount) {
   const guessDisplay = guessIndicators.join(' ');
   return `Tescodle ${guessCount}/${maxGuesses} ${guessDisplay} https://tescodle.com`;
 }
-
