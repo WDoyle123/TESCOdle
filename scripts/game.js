@@ -153,10 +153,11 @@ function addGuessInput(
   // Create a new input element
   const newInput = document.createElement("input");
   newInput.className = "price-form";
-  newInput.type = "text"; // Allow commas as decimal separators on mobile
+  newInput.type = "text"; // Allows comma input while still requesting keypad.
   newInput.placeholder = "0.00";
   newInput.id = "guess" + guessIndex;
-  newInput.setAttribute("inputmode", "text"); // Allow comma key on keyboards that use it
+  newInput.setAttribute("inputmode", "decimal"); // Prefer numeric keypad with decimal separator
+  newInput.setAttribute("pattern", "[0-9.,]*");
   newInput.setAttribute("pattern", "[0-9.,]*");
 
   // Create a new 'Add' button
@@ -193,26 +194,6 @@ function addGuessInput(
     if (event.key === "Enter" || event.keyCode === 13) {
       submitGuess(newInput, addButton, errorMessage);
     }
-  });
-  newInput.addEventListener("keydown", function (event) {
-    const isCommaKey =
-      event.key === "," ||
-      event.key === "Decimal" ||
-      event.code === "Comma" ||
-      event.code === "NumpadDecimal" ||
-      event.code === "NumpadComma";
-    if (!isCommaKey) return;
-
-    event.preventDefault();
-    const start = newInput.selectionStart ?? newInput.value.length;
-    const end = newInput.selectionEnd ?? newInput.value.length;
-    newInput.value =
-      newInput.value.slice(0, start) + "," + newInput.value.slice(end);
-    const nextPos = start + 1;
-    if (typeof newInput.setSelectionRange === "function") {
-      newInput.setSelectionRange(nextPos, nextPos);
-    }
-    newInput.dispatchEvent(new Event("input", { bubbles: true }));
   });
   // Keep input limited to digits, dot, and comma.
   newInput.addEventListener("input", function () {
