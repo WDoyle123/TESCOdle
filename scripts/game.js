@@ -684,7 +684,7 @@ document.addEventListener("DOMContentLoaded", () => {
       button.textContent.includes('Correct'));
     
     const resultText = generateGameResultText(hasCorrectGuess, currentGuessCount);
-    copyToClipboard(resultText);
+    shareResult(resultText);
   });
 });
 
@@ -715,28 +715,107 @@ document.addEventListener("DOMContentLoaded", () => {
 //  console.log(`Date object overridden. Current date is set to: ${mockedDate}`);
 //})();
 
+// Show a short lived message at the bottom of the screen.
+// Safari (iOS and macOS) gives no feedback of its own when text is copied,
+// unlike Chrome on Android which shows a system toast, so we always show ours.
+let toastTimeoutId;
+
+function showToast(message) {
+  const toast = document.getElementById('share-toast');
+  if (!toast) {
+    return;
+  }
+  toast.textContent = message;
+  toast.classList.add('active');
+  clearTimeout(toastTimeoutId);
+  toastTimeoutId = setTimeout(() => {
+    toast.classList.remove('active');
+  }, 2500);
+}
+
+// Fallback for browsers without navigator.clipboard (chrome doesn't support without https)
+function legacyCopyToClipboard(text) {
+  const textArea = document.createElement('textarea');
+  textArea.value = text;
+  // readonly stops iOS opening the keyboard, and the off screen styles stop the
+  // page scrolling or zooming to the textarea while we select it
+  textArea.setAttribute('readonly', '');
+  textArea.style.position = 'fixed';
+  textArea.style.top = '0';
+  textArea.style.left = '0';
+  textArea.style.opacity = '0';
+  document.body.appendChild(textArea);
+
+  const selection = document.getSelection();
+  const previousRange = selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
+
+  let copied = false;
+  try {
+    // iOS ignores textArea.select(), it needs an explicit range and selection range
+    const range = document.createRange();
+    range.selectNodeContents(textArea);
+    selection.removeAllRanges();
+    selection.addRange(range);
+    textArea.setSelectionRange(0, text.length);
+    copied = document.execCommand('copy');
+  } catch (err) {
+    console.error('Fallback: Could not copy text: ', err);
+  }
+
+  selection.removeAllRanges();
+  if (previousRange) {
+    selection.addRange(previousRange);
+  }
+  document.body.removeChild(textArea);
+  return copied;
+}
+
+// iOS and iPadOS expect the native share sheet rather than a silent copy, so
+// prefer it on touch devices and keep copy to clipboard on desktop.
+function canUseShareSheet(text) {
+  if (!navigator.share) {
+    return false;
+  }
+  // Same desktop test as the zoom factor in static/zoom.css
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    return false;
+  }
+  return !navigator.canShare || navigator.canShare({ text: text });
+}
+
+// Function to share the game result, or copy it where there is no share sheet
+function shareResult(text) {
+  if (!canUseShareSheet(text)) {
+    copyToClipboard(text);
+    return;
+  }
+
+  // The share sheet is its own feedback, so no toast on success
+  navigator.share({ text: text }).catch(err => {
+    // Dismissing the sheet is a normal thing to do, not a failure to report
+    if (err && err.name === 'AbortError') {
+      return;
+    }
+    console.error('Could not open share sheet: ', err);
+    copyToClipboard(text);
+  });
+}
+
 // Function to copy the game result to the clipboard
 function copyToClipboard(text) {
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(text).then(() => {
       console.log('Game result copied to clipboard');
+      showToast('Results copied to clipboard!');
     }).catch(err => {
       console.error('Could not copy text: ', err);
+      showToast('Could not copy results');
     });
+  } else if (legacyCopyToClipboard(text)) {
+    console.log('Fallback: Game result copied to clipboard');
+    showToast('Results copied to clipboard!');
   } else {
-    // Fallback for browsers that do not support navigator.clipboard (chrome doesn't support without https)
-    const textArea = document.createElement('textarea');
-    textArea.value = text;
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-    try {
-      document.execCommand('copy');
-      console.log('Fallback: Game result copied to clipboard');
-    } catch (err) {
-      console.error('Fallback: Could not copy text: ', err);
-    }
-    document.body.removeChild(textArea);
+    showToast('Could not copy results');
   }
 }
 

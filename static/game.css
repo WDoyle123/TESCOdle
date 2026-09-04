@@ -218,3 +218,31 @@
     width: 100%; 
 }
 
+
+.share-toast {
+    position: fixed;
+    left: 50%;
+    bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+    transform: translateX(-50%) translateY(10px);
+    max-width: 90%;
+    padding: 10px 18px;
+    background: #00539f;
+    color: white;
+    font-family: 'TESCOModern-Regular';
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 2000;
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+}
+
+.share-toast.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
