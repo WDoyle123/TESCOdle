@@ -1,4 +1,4 @@
-FROM nginx:1.31.9-alpine
+FROM docker.io/library/nginx:1.31.9-alpine
 
 RUN rm -rf /usr/share/nginx/html/*
 
